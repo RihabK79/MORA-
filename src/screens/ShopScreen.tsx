@@ -8,9 +8,9 @@ import {colors} from '../theme';
 import {Category,Product} from '../types';
 
 const subcategories: Record<Category,string[]> = {
-  Skincare: ['Cleansers','Moisturizers','Serums'],
-  Makeup: ['Face','Lips'],
-  Perfumes: ['Signature','Floral'],
+  Skincare: ['Cleanser','Moisturizer','Serum','Sun Care'],
+  Makeup: ['Mascara','Face Tint','Lipstick','Lip Gloss'],
+  Perfumes: ['Floral','Amber','Vanilla'],
 };
 
 export function ShopScreen(){
