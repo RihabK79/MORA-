@@ -100,9 +100,11 @@ export function ShopScreen(){
           {searching&&<Text style={{fontSize:18,fontWeight:'700',color:colors.text,marginBottom:12}}>{data.length} result{data.length===1?'':'s'}</Text>}
           <FlatList
             data={data}
+            numColumns={2}
+            columnWrapperStyle={{justifyContent:'space-between'}}
             keyExtractor={(item)=>item.id}
             renderItem={({item})=>(
-              <Pressable onPress={()=>nav.navigate('ProductDetails',{productId:item.id})} style={[styles.card,{marginBottom:12}]}>
+              <Pressable onPress={()=>nav.navigate('ProductDetails',{productId:item.id})} style={[styles.card,{flex:0,width:'48%',maxWidth:'48%',marginBottom:12}]}>
                 <ProductImage uri={item.image}/>
                 <Text style={styles.productName}>{item.name}</Text>
                 <Text style={{color:colors.muted}}>{item.category} · {item.subcategory} · {item.size}</Text>
