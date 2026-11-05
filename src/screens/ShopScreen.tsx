@@ -6,6 +6,7 @@ import {products} from '../data/products';
 import {ProductImage,Screen,styles} from '../components/UI';
 import {colors} from '../theme';
 import {Category,Product} from '../types';
+import {useStore} from '../context/StoreContext';
 
 const subcategories: Record<Category,string[]> = {
   Skincare: ['Cleanser','Moisturizer','Serum','Sun Care'],
@@ -18,6 +19,8 @@ export function ShopScreen(){
   const [subcategory,setSubcategory]=useState<string|null>(null);
   const [search,setSearch]=useState('');
   const nav=useNavigation<any>();
+  const {recentlyViewed}=useStore();
+  const recentProducts=recentlyViewed.map(id=>products.find(product=>product.id===id)).filter((product):product is Product=>Boolean(product));
 
   const selectCategory=(next:Category)=>{
     setCategory(next);
@@ -56,6 +59,26 @@ export function ShopScreen(){
 
       {!searching && (
         <>
+          {recentProducts.length>0&&!category&&(
+            <View style={{marginBottom:18}}>
+              <Text style={{fontSize:18,fontWeight:'700',color:colors.text,marginBottom:12}}>Recently viewed</Text>
+              <FlatList
+                data={recentProducts}
+                numColumns={2}
+                columnWrapperStyle={{justifyContent:'space-between'}}
+                keyExtractor={(item)=>item.id}
+                renderItem={({item})=>(
+                  <Pressable onPress={()=>nav.navigate('ProductDetails',{productId:item.id})} style={[styles.card,{flex:0,width:'48%',maxWidth:'48%',marginBottom:12}]}>
+                    <ProductImage uri={item.image}/>
+                    <Text style={styles.productName}>{item.name}</Text>
+                    <Text style={{color:colors.muted,fontSize:12}}>{item.category}</Text>
+                    <Text style={styles.price}>{item.price} MAD</Text>
+                  </Pressable>
+                )}
+                scrollEnabled={false}
+              />
+            </View>
+          )}
           <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginBottom:12}}>
             <Text style={{fontSize:18,fontWeight:'700',color:colors.text}}>Categories</Text>
             {category&&<Pressable onPress={()=>{setCategory(null);setSubcategory(null);}}><Text style={{color:colors.primary,fontWeight:'600'}}>Clear</Text></Pressable>}
