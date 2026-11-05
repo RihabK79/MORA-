@@ -9,21 +9,33 @@ function Tabs(){
         tabBarInactiveTintColor: colors.muted,
         tabBarLabelStyle: {fontSize: 11, fontWeight: '600'},
         tabBarStyle: {
+          position: 'absolute',
+          left: 12,
+          right: 12,
+          bottom: 8,
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
-          height: 62,
+          height: 68,
+          borderRadius: 20,
+          borderTopWidth: 0,
+          borderWidth: 1,
           paddingBottom: 8,
           paddingTop: 6,
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOpacity: 0.12,
+          shadowRadius: 12,
+          shadowOffset: {width: 0,height: 4},
         },
         tabBarIcon: ({focused, color, size}) => {
           let iconName: React.ComponentProps<typeof Ionicons>['name'];
 
           switch (route.name) {
-            case 'Discover':
-              iconName = focused ? 'compass' : 'compass-outline';
+            case 'Home':
+              iconName = focused ? 'home' : 'home-outline';
               break;
-            case 'Shop':
-              iconName = focused ? 'storefront' : 'storefront-outline';
+            case 'Search':
+              iconName = focused ? 'search' : 'search-outline';
               break;
             case 'Favorites':
               iconName = focused ? 'heart' : 'heart-outline';
@@ -42,8 +54,8 @@ function Tabs(){
         },
       })}
     >
-      <Tab.Screen name="Discover" component={HomeScreen}/>
-      <Tab.Screen name="Shop" component={ShopScreen}/>
+      <Tab.Screen name="Home" component={HomeScreen}/>
+      <Tab.Screen name="Search" component={ShopScreen}/>
       <Tab.Screen name="Favorites" component={FavoritesScreen}/>
       <Tab.Screen name="My bag" component={CartScreen}/>
       <Tab.Screen name="Account" component={ProfileScreen}/>
